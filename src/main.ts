@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import AdmZip from 'adm-zip'
 import { readBundleInclude } from './readbundleinclude'
 import { getBundleIncludeFiles } from './getbundleincludefiles'
+import path from 'path'
 
 /**
  * The main function for the action.
@@ -9,10 +10,14 @@ import { getBundleIncludeFiles } from './getbundleincludefiles'
  */
 export async function run(): Promise<void> {
   try {
-    const bundleInclude: string = core.getInput('bundleInclude')
+    let bundleInclude: string = core.getInput('bundleInclude')
     const outputPath: string = core.getInput('bundle')
 
     const overrideExisting: boolean = core.getBooleanInput('overrideExisting')
+
+    if (process.env.GITHUB_WORKSPACE != null) {
+      bundleInclude = path.join(process.env.GITHUB_WORKSPACE, bundleInclude)
+    }
 
     let fileGlobs: string[]
     try {
