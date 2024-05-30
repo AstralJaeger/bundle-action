@@ -6,17 +6,18 @@ branding:
   icon: 'package'
   color: 'yellow'
 inputs:
-  bundleinclude: # id of input
+  bundleInclude:
     description: 'The path to your bundleinclude file'
     required: true
     default: '.bundleinclude'
-  bundle: # id of input
+  bundle:
     description: 'The path to your bundleinclude file'
     required: true
     default: './bundle'
-
-  analytics:
-    description: 'Enable analytics for our usage to improve the action'
+  overrideExisting:
+    description: 'Override exisiting bundles'
+    required: false
+    default: false
 outputs:
 
 runs:
