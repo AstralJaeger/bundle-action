@@ -1,16 +1,13 @@
-# @astraljaeger/bundle-action
+# astraljaeger/bundle-action
 
-A simple GitHub Action which uses a `.bundleinclude` file to create zip bundles. Originally I created this action to
-build release packages for my university assignments, having them built on GitHub by a workflow and then create a
-release was much less hassle than to do it manually on my machine. This comes form the nature of assignments where you
-had already uploaded your 'final' version and then get informed but fellow students you messed something up, but really?
-rebuild then entire project, documentation, rebundle and resubmit? Just use a workflow instead! Change the assignment,
-git commit, git push, wait and have a convenient .zip created for you!
+A simple GitHub Action uses a ``.bundleinclude`` file to create zip bundles. I originally created this action to build release packages for my university assignments. Having them built on GitHub by a workflow and then creating a release was much less hassle than doing it manually on my machine.
+
+Assignments often go like this: you upload your 'final' version, only to be informed by fellow students that you messed something up. Do you really have to rebuild the entire project, update the documentation, rebundle, and resubmit? Nah, just use a workflow instead! Make changes to the assignment, commit them to git, push, and wait for a convenient .zip to be created for you!
 
 ## How to use
 
 ```yaml
-  - name: Install Node.js
+  - name: Create bundle
     uses: astraljaeger/bundle-action@v1
     with:
       bundleignore: .bundleignore
@@ -19,6 +16,27 @@ git commit, git push, wait and have a convenient .zip created for you!
 ```
 
 ```gitignore
+# pdf files
 **/*.pdf
+
+# images
 images/*.png
+```
+
+## Bundleinclude:
+
+Each line of the bundle includepattern is handled as a glob pattern. 
+Lines starting with # will also be ignored and treated as comments.
+
+The action uses the [glob package](https://www.npmjs.com/package/glob) to match files. 
+
+```bundleinclude
+# pdf files
+**/*.pdf
+
+# images
+images/*.png
+
+# assets
+assets/*
 ```

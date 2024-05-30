@@ -9,7 +9,7 @@ export const readBundleInclude = async (filePath: string): Promise<string[]> => 
     }
 
     const lines = fileContent.split('\n')
-    return lines.filter(line => line.trim() !== '')
+    return lines.filter(line => line.trim() !== '' && !line.startsWith('#'))
   } catch (err) {
     // @ts-expect-error should be an error here
     throw new Error(`Error reading file: ${err.message}`)
