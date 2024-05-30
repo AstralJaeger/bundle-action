@@ -10,12 +10,15 @@ inputs:
     description: 'The path to your bundleinclude file'
     required: true
     default: '.bundleinclude'
+  bundle: # id of input
+    description: 'The path to your bundleinclude file'
+    required: true
+    default: './bundle'
 
   analytics:
     description: 'Enable analytics for our usage to improve the action'
 outputs:
-  bundle: # id of output
-    description: 'The path to the bundle we created'
+
 runs:
   using: 'node20'
   main: 'index.js'

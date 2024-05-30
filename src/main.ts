@@ -1,4 +1,7 @@
 import * as core from '@actions/core'
+import AdmZip from "adm-zip";
+import {readBundleInclude} from "./readBundleInclude";
+import {getBundleIncludeFiles} from "./getBundleIncludeFiles";
 
 /**
  * The main function for the action.
@@ -6,7 +9,26 @@ import * as core from '@actions/core'
  */
 export async function run(): Promise<void> {
   try {
-    const bundleinclude: string = core.getInput('bundleinclude')
+    const bundleInclude: string = core.getInput('bundleinclude')
+    const outputPath: string = core.getInput('bundle')
+
+    let fileGlobs: string[]
+    try {
+      core.info(`Trying to load contents of bundle include file`);
+      fileGlobs = await readBundleInclude(bundleInclude);
+    } catch (e) {
+      core.setFailed(`Could not read bundleinclude file: ${e}`);
+      return ;
+    }
+
+    const files = (await Promise.all(fileGlobs.map(glob => getBundleIncludeFiles(glob))))
+        .flat(1)
+
+    core.info(`Found ${files.length} files to include in bundle`);
+
+    const zip = new AdmZip();
+    files.forEach(file => {zip.addLocalFile(file);});
+    await zip.writeZipPromise(outputPath);
 
     // Set outputs for other workflow steps to use
     core.setOutput('bundle', '')
