@@ -5,6 +5,7 @@ author: 'Felix Hillebrand'
 branding:
   icon: 'package'
   color: 'yellow'
+
 inputs:
   bundleInclude:
     description: 'The path to your bundleinclude file'
