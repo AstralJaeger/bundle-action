@@ -1,5 +1,5 @@
-import { glob, globStream, Glob } from "glob";
+import { glob } from 'glob'
 
 export const getBundleIncludeFiles = async (pattern: string): Promise<string[]> => {
-    return await glob(pattern, {});
+  return await glob(pattern, {})
 }

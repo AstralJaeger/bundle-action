@@ -10,6 +10,7 @@ inputs:
     description: 'The path to your bundleinclude file'
     required: true
     default: '.bundleinclude'
+
   bundle:
     description: 'The path to your bundleinclude file'
     required: true
@@ -17,7 +18,7 @@ inputs:
   overrideExisting:
     description: 'Override exisiting bundles'
     required: false
-    default: false
+    default: 'false'
 outputs:
 
 runs:
