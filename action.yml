@@ -1,4 +1,4 @@
-name: '@astraljaeger/bundle-action'
+name: 'astraljaeger/bundle-action'
 description: 'A GitHub Action to create zip release bundles'
 author: 'Felix Hillebrand'
 
@@ -10,7 +10,6 @@ inputs:
     description: 'The path to your bundleinclude file'
     required: true
     default: '.bundleinclude'
-
   bundle:
     description: 'The path to your bundleinclude file'
     required: true

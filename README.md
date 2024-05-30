@@ -7,4 +7,18 @@ had already uploaded your 'final' version and then get informed but fellow stude
 rebuild then entire project, documentation, rebundle and resubmit? Just use a workflow instead! Change the assignment,
 git commit, git push, wait and have a convenient .zip created for you!
 
-## How yo use
+## How to use
+
+```yaml
+  - name: Install Node.js
+    uses: astraljaeger/bundle-action@v1
+    with:
+      bundleignore: .bundleignore
+      bundle: ./bundle.zip
+      overrideExisting: true # optional
+```
+
+```gitignore
+**/*.pdf
+images/*.png
+```

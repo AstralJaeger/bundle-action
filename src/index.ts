@@ -9,4 +9,4 @@ run()
   // eslint-disable-next-line github/no-then
   .catch(error => {
     core.setFailed(error.message)
-  })
+  });
