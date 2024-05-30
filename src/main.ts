@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import AdmZip from 'adm-zip'
-import { readBundleInclude } from './readBundleInclude'
-import { getBundleIncludeFiles } from './getBundleIncludeFiles'
+import { readBundleInclude } from './readbundleinclude'
+import { getBundleIncludeFiles } from './getbundleincludefiles'
 
 /**
  * The main function for the action.
@@ -22,15 +22,15 @@ export async function run(): Promise<void> {
       core.setFailed(`🔥 Could not read bundle include file 📄: ${e}`)
       return
     }
-
-    const files = (await Promise.all(fileGlobs.map(glob => getBundleIncludeFiles(glob)))).flat(1)
+    const files = (await Promise.all(fileGlobs.map(async glob => getBundleIncludeFiles(glob)))).flat(2)
 
     core.info(`Found ${files.length} files 📄 to include in bundle`)
 
     const zip = new AdmZip()
-    files.forEach(file => {
-      zip.addLocalFile(file)
-    })
+    for (const entry of files) {
+      core.debug(`Adding file 📄 to zip: ${entry}`)
+      zip.addLocalFile(entry)
+    }
     await zip.writeZipPromise(outputPath, { overwrite: overrideExisting })
     core.info(`Wrote file 📄 to ${outputPath}`)
 
