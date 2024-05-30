@@ -19,7 +19,6 @@ inputs:
     description: 'Override exisiting bundles'
     required: false
     default: 'false'
-outputs:
 
 runs:
   using: 'node20'
