@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "bundle": "pnpm format:write && pnpm package",
-    "package": "npx ncc build src/index.ts -o dist --source-map --license licenses.txt ",
+    "bundle:release": "pnpm format:write && pnpm package:release",
+    "package": "npx ncc build src/index.ts -o dist --source-map --license licenses.txt",
+    "package:release": "npx ncc build src/index.ts -o dist --license licenses.txt -m",
     "package:watch": "pnpm run package -- --watch",
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",

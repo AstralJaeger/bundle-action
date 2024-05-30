@@ -42,4 +42,10 @@ jobs:
       - name: Lint
         run: pnpm run lint
       - name: Build
-        run: pnpm run build
+        run: pnpm run bundle:release
+      - name: Create Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: |
+            dist
