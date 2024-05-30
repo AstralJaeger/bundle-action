@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Lint Codebase
 
 on:
   pull_request:
@@ -10,17 +10,22 @@ on:
 
 permissions:
   contents: read
+  packages: read
+  statuses: write
 
 jobs:
-  test-typescript:
-    name: TypeScript Tests
+  lint:
+    name: Lint Codebase
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
+      # Setup Node and pnpm with cache
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
@@ -44,33 +49,21 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install Dependencies
-        id: pnpm-install
+        id: install
         run: pnpm install
 
-      - name: Check Format
-        id: pnpm-format-check
-        run: pnpm run format:check
+      - name: Build dist/ Directory
+        id: build
+        run: pnpm run bundle:release
 
-      - name: Lint
-        id: pnpm-lint
-        run: pnpm run lint
-
-  test-action:
-    name: GitHub Actions Test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v4
-
-      - name: Test Local Action
-        id: test-action
-        uses: ./
-        with:
-          bundleInclude: .bundleinclude
-          bundle: ./bundle.zip
-
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+      - name: Lint Codebase
+        id: super-linter
+        uses: super-linter/super-linter/slim@v6
+        env:
+          DEFAULT_BRANCH: main
+          FILTER_REGEX_EXCLUDE: dist/**/*
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TYPESCRIPT_DEFAULT_STYLE: prettier
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_JAVASCRIPT_STANDARD: false
+          VALIDATE_JSCPD: false
