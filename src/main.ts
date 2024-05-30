@@ -34,7 +34,12 @@ export async function run(): Promise<void> {
     const zip = new AdmZip()
     for (const entry of files) {
       core.debug(`Adding file 📄 to zip: ${entry}`)
-      zip.addLocalFile(entry, path.dirname(entry))
+      let basePath = path.dirname(entry)
+      if (basePath === '.') {
+        zip.addLocalFile(entry)
+      } else {
+        zip.addLocalFile(entry, basePath)
+      }
     }
     await zip.writeZipPromise(outputPath, { overwrite: overrideExisting })
     core.info(`Wrote file 📄 to ${outputPath}`)
