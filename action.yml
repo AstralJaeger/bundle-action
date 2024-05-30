@@ -1,0 +1,21 @@
+name: '@astraljaeger/bundle-action'
+description: 'A GitHub Action to create zip release bundles'
+author: 'Felix Hillebrand'
+
+branding:
+  icon: 'package'
+  color: 'yellow'
+inputs:
+  bundleinclude: # id of input
+    description: 'The path to your bundleinclude file'
+    required: true
+    default: '.bundleinclude'
+
+  analytics:
+    description: 'Enable analytics for our usage to improve the action'
+outputs:
+  bundle: # id of output
+    description: 'The path to the bundle we created'
+runs:
+  using: 'node20'
+  main: 'index.js'
