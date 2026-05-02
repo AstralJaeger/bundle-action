@@ -15,7 +15,14 @@ updates:
     commit-message:
       prefix: 'npm'
     open-pull-requests-limit: 5
-    versioning-strategy: increase-if-necessary
+    versioning-strategy: increase-if-necessary 
+    cooldown:
+      default-days: 7
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
 
   # Maintain dependencies for github actions
   - package-ecosystem: 'github-actions'
@@ -27,3 +34,9 @@ updates:
     commit-message:
       prefix: 'actions'
     open-pull-requests-limit: 5
+    cooldown:
+      default-days: 7
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+
