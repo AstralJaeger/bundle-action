@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0
 
@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 20
-      - uses: pnpm/action-setup@v6.0.3
+      - uses: pnpm/action-setup@v6.0.8
         name: Install pnpm
         with:
           version: 8
